@@ -1,11 +1,11 @@
 # remove-committed-env.sh
 
-This script untracks common local environment files from the git index while leaving your local copies intact. It also ensures .gitignore contains common env patterns.
+This repository helper creates a script to untrack local environment files from git while leaving your local copies intact, and updates .gitignore to prevent re-committing them.
 
 Usage:
 
 1. Create a branch: git checkout -b chore/untrack-env-files
-2. Run the script from the repository root: ./scripts/remove-committed-env.sh
-3. Push and open a PR.
+2. Run from repo root: ./scripts/remove-committed-env.sh
+3. Review commits and open a PR.
 
-Security note: This script does not rewrite git history. If secrets were committed in the past, rotate the secrets immediately and consider using BFG or git filter-repo to purge history.
+Security note: This script does NOT rewrite git history. If secrets were committed in the past, rotate them immediately and consider using BFG or git filter-repo to purge history.
