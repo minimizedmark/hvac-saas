@@ -15,6 +15,7 @@ node_modules
 
 # Misc
 .DS_Store
+.vscode/
 *.pem
 
 # Debug
@@ -24,7 +25,15 @@ yarn-error.log*
 
 # Local env files
 .env
-.env*.local
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+
+# Secrets / keys
+*.secret
+*.key
 
 # Vercel
 .vercel
