@@ -19,7 +19,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/dashboard`,
       },
     });
 
@@ -32,39 +32,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to HVAC Flow
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your email to get a login link
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <div>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@yourhvac.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">HVAC Flow</h1>
+        <p className="text-center text-gray-600 mb-8">Sign in with magic link</p>
+
+        <form onSubmit={handleLogin} className="space-y-6">
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            placeholder="you@yourhvac.com"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50"
           >
             {loading ? 'Sending...' : 'Send Magic Link'}
           </button>
-          {message && (
-            <p className={`text-center text-sm ${message.includes('Error') ? 'text-red-600' : 'text-green-600'}`}>
-              {message}
-            </p>
-          )}
+
+          {message && <p className="text-center text-sm">{message}</p>}
         </form>
       </div>
     </div>
