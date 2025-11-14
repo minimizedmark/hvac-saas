@@ -1,0 +1,28 @@
+/* Local vendor of Inter (latin subsets only). Points to local woff2 files in /public/fonts/ */
+
+/* latin 400 */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/inter-v20-latin-400.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* latin 600 */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/inter-v20-latin-600.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* latin 700 */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/inter-v20-latin-700.woff2') format('woff2');
+  font-display: swap;
+}
