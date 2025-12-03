@@ -11,7 +11,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export const config = { api: { bodyParser: false } };
+
+
 
 export async function POST(req: Request) {
   const buf = await buffer(req);
