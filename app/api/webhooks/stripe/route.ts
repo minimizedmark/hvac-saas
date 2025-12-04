@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-06-01' });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2020-08-27' });
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 const resend = new Resend(process.env.RESEND_API_KEY!);
 const supabase = createClient(
