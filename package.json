@@ -18,5 +18,10 @@
   "@stripe/stripe-js": "^8.5.3",
   "resend": "^3.0.0",
   "micro": "^10.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0",
+    "@types/node": "^20.0.0"
   }
 }
