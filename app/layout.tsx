@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'HVACflow - HVAC Management Platform',
+  title: 'HVAC Flow - HVAC Management Platform',
   description: 'Professional HVAC contractor management software',
 }
 

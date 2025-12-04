@@ -1,4 +1,3 @@
-import { buffer } from 'micro';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
@@ -15,12 +14,12 @@ const supabase = createClient(
 
 
 export async function POST(req: Request) {
-  const buf = await buffer(req);
+  const buf = await req.text();
   const sig = req.headers.get('stripe-signature')!;
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
   } catch (err: any) {
     console.error('Webhook signature failed:', err.message);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });

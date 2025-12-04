@@ -49,7 +49,7 @@ export default function Home() {
       <div style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
         {/* HEADER */}
         <header style={{ textAlign: 'center', padding: '40px 20px 20px' }}>
-          <h1 style={{ fontSize: 48, margin: 0, color: '#00d4ff', fontWeight: 900 }}>Flow Platform</h1>
+          <h1 style={{ fontSize: 48, margin: 0, color: '#00d4ff', fontWeight: 900 }}>HVAC Flow</h1>
           <p style={{ fontSize: 22, color: '#94a3b8', margin: '20px 0' }}>
             Only 50 Alberta contractors will EVER lock in $1,495/year for life
           </p>
@@ -185,10 +185,10 @@ export default function Home() {
             <tbody>
               <tr style={{ borderBottom: '2px solid #00d4ff' }}>
                 <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>ServiceTitan</th>
-                <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>Flow Platform (Founding)</th>
+                <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>HVAC Flow (Founding)</th>
               </tr>
               <tr>
-                <td style={{ padding: 15, borderBottom: '1px solid #334155' }}>$600/month = $7,200/year</td>
+                <td style={{ padding: 15, borderBottom: '1px solid #334155' }}>Built for 50+ truck operations</td>
                 <td style={{ padding: 15, borderBottom: '1px solid #334155' }}><strong style={{ color: '#00d4ff' }}>$1,495/year</strong></td>
               </tr>
               <tr>
@@ -273,7 +273,7 @@ export default function Home() {
             <strong>Email:</strong> <a href="mailto:mark@smartbizai.store" style={{ color: '#00d4ff' }}>mark@smartbizai.store</a>
           </p>
           <p style={{ marginTop: 30, fontSize: 14 }}>
-            Flow Platform &copy; 2025 | Alberta, Canada
+            HVAC Flow &copy; 2025 | Alberta, Canada
           </p>
         </footer>
       </div>
@@ -381,7 +381,7 @@ export default function Home() {
             <tbody>
               <tr style={{ borderBottom: '2px solid #00d4ff' }}>
                 <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>ServiceTitan</th>
-                <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>Flow Platform (Founding)</th>
+                <th style={{ padding: 15, textAlign: 'left', color: '#00d4ff' }}>HVAC Flow (Founding)</th>
               </tr>
               <tr>
                 <td style={{ padding: 15, borderBottom: '1px solid #334155' }}>$600/month = $7,200/year</td>
@@ -469,7 +469,7 @@ export default function Home() {
             <strong>Email:</strong> <a href="mailto:mark@smartbizai.store" style={{ color: '#00d4ff' }}>mark@smartbizai.store</a>
           </p>
           <p style={{ marginTop: 30, fontSize: 14 }}>
-            Flow Platform &copy; 2025 | Alberta, Canada
+            HVAC Flow &copy; 2025 | Alberta, Canada
           </p>
         </footer>
       </div>
