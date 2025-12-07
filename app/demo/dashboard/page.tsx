@@ -1,48 +1,99 @@
+'use client';
+import { useState, useEffect } from 'react';
+import { TECHS, JOBS } from '../../../lib/demoData';
+import HVACMap from '../../../components/HVACMap';
+
 export default function Dashboard() {
+  const [revenue, setRevenue] = useState(18400);
+  const [updates, setUpdates] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRevenue(prev => prev + Math.floor(Math.random() * 50));
+      setUpdates(prev => prev + 1);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activeTechs = TECHS.filter(t => t.status === 'on-site' || t.status === 'en-route').length;
+  const activeJobs = JOBS.filter(j => j.status === 'in-progress').length;
+
   return (
     <div>
-      <h1 style={{ fontSize: 44, fontWeight: 900, color: '#00d4ff', marginBottom: 24 }}>Contractor Dashboard</h1>
-      <div style={{
-        display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24, marginBottom: 40
-      }}>
-        <div style={{
-          background: '#001528', border: '2px solid #00d4ff', borderRadius: 16, padding: 32, textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#00d4ff', fontSize: 28, fontWeight: 800 }}>Founding Member</h2>
-          <p style={{ fontSize: 40, fontWeight: 900, margin: '16px 0' }}>#12</p>
-          <p style={{ color: '#94a3b8' }}>Lifetime Pro Access</p>
+      <h1 style={{ fontSize: 44, fontWeight: 900, color: '#00d4ff', marginBottom: 24 }}>Dashboard</h1>
+
+      {/* Live Stats */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20, marginBottom: 32 }}>
+        <div style={{ background: '#001528', border: '2px solid #10B981', borderRadius: 12, padding: 24, textAlign: 'center' }}>
+          <p style={{ color: '#94a3b8', fontSize: 14, marginBottom: 8 }}>Active Technicians</p>
+          <p style={{ fontSize: 36, fontWeight: 900, color: '#10B981' }}>{activeTechs}/{TECHS.length}</p>
         </div>
-        <div style={{
-          background: '#001528', border: '2px solid #00d4ff', borderRadius: 16, padding: 32, textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#e2e8f0', fontSize: 28, fontWeight: 800 }}>Today's Leads</h2>
-          <p style={{ fontSize: 40, fontWeight: 900, margin: '16px 0' }}>7</p>
+        <div style={{ background: '#001528', border: '2px solid #00d4ff', borderRadius: 12, padding: 24, textAlign: 'center' }}>
+          <p style={{ color: '#94a3b8', fontSize: 14, marginBottom: 8 }}>Today's Revenue</p>
+          <p style={{ fontSize: 36, fontWeight: 900, color: '#00d4ff' }}>${revenue.toLocaleString()}</p>
         </div>
-        <div style={{
-          background: '#001528', border: '2px solid #00d4ff', borderRadius: 16, padding: 32, textAlign: 'center'
-        }}>
-          <h2 style={{ color: '#e2e8f0', fontSize: 28, fontWeight: 800 }}>Revenue This Month</h2>
-          <p style={{ fontSize: 40, fontWeight: 900, margin: '16px 0' }}>$18,400</p>
+        <div style={{ background: '#001528', border: '2px solid #F59E0B', borderRadius: 12, padding: 24, textAlign: 'center' }}>
+          <p style={{ color: '#94a3b8', fontSize: 14, marginBottom: 8 }}>Active Jobs</p>
+          <p style={{ fontSize: 36, fontWeight: 900, color: '#F59E0B' }}>{activeJobs}</p>
+        </div>
+        <div style={{ background: '#001528', border: '2px solid #8B5CF6', borderRadius: 12, padding: 24, textAlign: 'center' }}>
+          <p style={{ color: '#94a3b8', fontSize: 14, marginBottom: 8 }}>Live Updates</p>
+          <p style={{ fontSize: 36, fontWeight: 900, color: '#8B5CF6' }}>{updates}</p>
         </div>
       </div>
-      <div style={{
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40
-      }}>
-        <div style={{
-          background: 'linear-gradient(135deg, #00d4ff 0%, #2563eb 100%)',
-          color: '#fff', borderRadius: 20, padding: 36, textAlign: 'center', fontWeight: 700, fontSize: 24, boxShadow: '0 2px 16px rgba(0,212,255,0.15)'
-        }}>
-          AI Diagnosis Tool<br /><span style={{ fontSize: 18, fontWeight: 400 }}>Voice + Photo → Instant Answer</span>
-        </div>
-        <div style={{
-          background: 'linear-gradient(135deg, #00d4ff 0%, #00b894 100%)',
-          color: '#fff', borderRadius: 20, padding: 36, textAlign: 'center', fontWeight: 700, fontSize: 24, boxShadow: '0 2px 16px rgba(0,212,255,0.15)'
-        }}>
-          Good/Better/Best Proposals<br /><span style={{ fontSize: 18, fontWeight: 400 }}>Coming in 48 hours</span>
+
+      {/* Live Map */}
+      <div style={{ marginBottom: 32 }}>
+        <h2 style={{ fontSize: 24, fontWeight: 700, color: '#e2e8f0', marginBottom: 16 }}>Live GPS Tracking</h2>
+        <div style={{ height: 400, borderRadius: 12, overflow: 'hidden', border: '2px solid #334155' }}>
+          <HVACMap />
         </div>
       </div>
-      <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: 22, marginTop: 40 }}>
-        More tools dropping daily. You’re in early.
+
+      {/* Active Jobs */}
+      <div style={{ background: '#001528', border: '2px solid #334155', borderRadius: 12, padding: 24 }}>
+        <h2 style={{ fontSize: 24, fontWeight: 700, color: '#e2e8f0', marginBottom: 16 }}>Active Jobs</h2>
+        <div style={{ display: 'grid', gap: 12 }}>
+          {JOBS.filter(j => j.status === 'in-progress').map(job => (
+            <div key={job.id} style={{
+              background: '#0a192f',
+              border: `2px solid ${job.priority === 'emergency' ? '#EF4444' : '#3B82F6'}`,
+              borderRadius: 8,
+              padding: 16,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <div>
+                <p style={{ fontWeight: 700, fontSize: 16, marginBottom: 4 }}>{job.customer}</p>
+                <p style={{ fontSize: 13, color: '#94a3b8' }}>{job.type} • {job.tech}</p>
+              </div>
+              <span style={{
+                padding: '6px 12px',
+                borderRadius: 8,
+                fontSize: 12,
+                fontWeight: 700,
+                background: job.priority === 'emergency' ? '#EF4444' : '#3B82F6',
+                color: 'white',
+                textTransform: 'uppercase'
+              }}>
+                {job.priority}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* System Status Banner */}
+      <div style={{
+        marginTop: 32,
+        background: 'linear-gradient(135deg, #00d4ff 0%, #2563eb 100%)',
+        borderRadius: 12,
+        padding: 24,
+        textAlign: 'center'
+      }}>
+        <p style={{ fontSize: 20, fontWeight: 700, color: 'white', marginBottom: 8 }}>All Systems Operational</p>
+        <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 14 }}>GPS tracking, invoicing, and refrigerant compliance monitoring active</p>
       </div>
     </div>
   );

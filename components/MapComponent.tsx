@@ -3,124 +3,55 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { TECHS } from '../lib/demoData';
 
-// Employee profiles linked to trucks
-const employees = [
-  {
-    id: 1,
-    name: 'Mike Johnson',
-    role: 'Senior Technician',
-    truck: 'Unit 1',
-    location: { lat: 53.5320, lng: -113.5200 },
-    address: '123 Maple Crescent, Edmonton',
-    type: 'residential',
-    status: 'On Site - Furnace Repair'
-  },
-  {
-    id: 2,
-    name: 'Sarah Chen',
-    role: 'HVAC Specialist',
-    truck: 'Unit 2',
-    location: { lat: 53.5180, lng: -113.4850 },
-    address: '456 Oak Drive, Edmonton',
-    type: 'residential',
-    status: 'On Site - AC Installation'
-  },
-  {
-    id: 3,
-    name: 'David Martinez',
-    role: 'Lead Installer',
-    truck: 'Unit 3',
-    location: { lat: 53.5461, lng: -113.4938 },
-    address: 'Commerce Place, 10155 102 St',
-    type: 'commercial',
-    status: 'On Site - Rooftop Unit Service'
-  },
-  {
-    id: 4,
-    name: 'Emma Wilson',
-    role: 'Service Technician',
-    truck: 'Unit 4',
-    location: { lat: 53.5444, lng: -113.4909 },
-    address: 'Manulife Place, 10180 101 St',
-    type: 'commercial',
-    status: 'On Site - Chiller Maintenance'
-  },
-  {
-    id: 5,
-    name: 'James Thompson',
-    role: 'Lead Technician',
-    truck: 'Unit 5',
-    route: [
-      { lat: 53.5444, lng: -113.4909, label: 'Starting - Downtown Core' },
-      { lat: 53.5450, lng: -113.4880 },
-      { lat: 53.5460, lng: -113.4850 },
-      { lat: 53.5475, lng: -113.4820 },
-      { lat: 53.5490, lng: -113.4790 },
-      { lat: 53.5510, lng: -113.4750 },
-      { lat: 53.5530, lng: -113.4710 },
-      { lat: 53.5555, lng: -113.4670 },
-      { lat: 53.5580, lng: -113.4630 },
-      { lat: 53.5600, lng: -113.4590, label: 'Destination - Northeast Edmonton' }
-    ],
-    address: 'En route to 7890 Yellowhead Trail',
-    type: 'moving',
-    status: 'En Route - Emergency Call'
-  }
-];
-
-const truckIcon = L.icon({
-  iconUrl: '/truck.png',
-  iconSize: [40, 40],
-  iconAnchor: [20, 35],
-  popupAnchor: [0, -30],
-});
-
-function MovingTruck() {
-  const [routeIndex, setRouteIndex] = useState(0);
-  const movingEmployee = employees.find(e => e.type === 'moving')!;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRouteIndex(prev => (prev + 1) % movingEmployee.route!.length);
-    }, 3000); // Move every 3 seconds
-
-    return () => clearInterval(interval);
-  }, [movingEmployee.route]);
-
-  const currentPosition = movingEmployee.route![routeIndex];
-
-  return (
-    <>
-      {/* Route line */}
-      <Polyline 
-        positions={movingEmployee.route!.map(p => [p.lat, p.lng])} 
-        color="#00d4ff" 
-        weight={4}
-        opacity={0.7}
-        dashArray="10, 10"
-      />
-      {/* Moving truck */}
-      <Marker 
-        position={[currentPosition.lat, currentPosition.lng]} 
-        icon={truckIcon}
-      >
-        <Popup>
-          <div style={{ minWidth: 200 }}>
-            <h3 style={{ margin: '0 0 8px 0', color: '#00d4ff' }}>{movingEmployee.name}</h3>
-            <p style={{ margin: '4px 0', fontSize: 14 }}><strong>{movingEmployee.role}</strong></p>
-            <p style={{ margin: '4px 0', fontSize: 13 }}>{movingEmployee.truck}</p>
-            <p style={{ margin: '8px 0 4px 0', fontSize: 13, color: '#ff6b6b' }}><strong>{movingEmployee.status}</strong></p>
-            <p style={{ margin: '4px 0', fontSize: 12 }}>{movingEmployee.address}</p>
-          </div>
-        </Popup>
-      </Marker>
-    </>
-  );
-}
+// Create custom icons for each tech using their color
+const createTruckIcon = (color: string) => {
+  return L.divIcon({
+    html: `<div style="background-color: ${color}; width: 32px; height: 32px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-center; font-size: 16px;">🚛</div>`,
+    className: '',
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16],
+  });
+};
 
 export default function MapComponent({ height = '100%', width = '100%' }) {
-  const staticEmployees = employees.filter(e => e.type !== 'moving');
+  const [techPositions, setTechPositions] = useState(TECHS);
+  const [routeIndexes, setRouteIndexes] = useState<{[key: number]: number}>({});
+
+  // Initialize route indexes for moving techs
+  useEffect(() => {
+    const indexes: {[key: number]: number} = {};
+    TECHS.forEach(tech => {
+      if (tech.route && tech.route.length > 0) {
+        indexes[tech.id] = 0;
+      }
+    });
+    setRouteIndexes(indexes);
+  }, []);
+
+  // Animate moving trucks every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTechPositions(prev => prev.map(tech => {
+        if (tech.status === 'en-route' && tech.route && tech.route.length > 0) {
+          const currentIndex = routeIndexes[tech.id] || 0;
+          const nextIndex = (currentIndex + 1) % tech.route.length;
+          
+          setRouteIndexes(prev => ({ ...prev, [tech.id]: nextIndex }));
+          
+          return {
+            ...tech,
+            position: tech.route[nextIndex]
+          };
+        }
+        return tech;
+      }));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [routeIndexes]);
 
   return (
     <div style={{ height, width }}>
@@ -128,37 +59,79 @@ export default function MapComponent({ height = '100%', width = '100%' }) {
         center={[53.5444, -113.4909]}
         zoom={12}
         style={{ height: '100%', width: '100%' }}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
         
-        {/* Static trucks at job sites */}
-        {staticEmployees.map((employee) => (
+        {/* Draw routes for moving techs */}
+        {techPositions.map(tech => 
+          tech.route && tech.route.length > 0 && (
+            <Polyline 
+              key={`route-${tech.id}`}
+              positions={tech.route.map(p => [p.lat, p.lng])} 
+              color={tech.color} 
+              weight={4}
+              opacity={0.6}
+              dashArray="10, 10"
+            />
+          )
+        )}
+        
+        {/* Show all tech markers */}
+        {techPositions.map(tech => (
           <Marker 
-            key={employee.id} 
-            position={[employee.location.lat, employee.location.lng]} 
-            icon={truckIcon}
+            key={tech.id}
+            position={[tech.position.lat, tech.position.lng]} 
+            icon={createTruckIcon(tech.color)}
           >
             <Popup>
-              <div style={{ minWidth: 200 }}>
-                <h3 style={{ margin: '0 0 8px 0', color: '#00d4ff' }}>{employee.name}</h3>
-                <p style={{ margin: '4px 0', fontSize: 14 }}><strong>{employee.role}</strong></p>
-                <p style={{ margin: '4px 0', fontSize: 13 }}>{employee.truck}</p>
-                <p style={{ margin: '8px 0 4px 0', fontSize: 13, color: '#52c41a' }}><strong>{employee.status}</strong></p>
-                <p style={{ margin: '4px 0', fontSize: 12 }}>{employee.address}</p>
-                <p style={{ margin: '8px 0 0 0', fontSize: 11, color: '#888' }}>
-                  {employee.type === 'residential' ? '🏠 Residential' : '🏢 Commercial'}
+              <div style={{ minWidth: 220, padding: 8 }}>
+                <h3 style={{ margin: '0 0 8px 0', color: tech.color, fontSize: 16, fontWeight: 700 }}>
+                  {tech.name}
+                </h3>
+                <p style={{ margin: '4px 0', fontSize: 13 }}>
+                  <strong>{tech.truck}</strong>
                 </p>
+                <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>
+                  {tech.phone}
+                </p>
+                <div style={{ 
+                  margin: '8px 0 4px 0', 
+                  padding: '4px 8px', 
+                  borderRadius: 4,
+                  background: tech.status === 'on-site' ? '#10B981' : 
+                             tech.status === 'en-route' ? '#3B82F6' : '#6B7280',
+                  color: 'white',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  textAlign: 'center',
+                  textTransform: 'uppercase'
+                }}>
+                  {tech.status}
+                </div>
+                <p style={{ margin: '8px 0 4px 0', fontSize: 13, fontWeight: 600 }}>
+                  {tech.currentJob}
+                </p>
+                <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>
+                  {tech.jobType}
+                </p>
+                {tech.eta && (
+                  <p style={{ margin: '8px 0 0 0', fontSize: 12, color: tech.color, fontWeight: 600 }}>
+                    ETA: {tech.eta} minutes
+                  </p>
+                )}
+                <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #e5e7eb' }}>
+                  <p style={{ margin: 0, fontSize: 11, color: '#888' }}>
+                    Skills: {tech.skills.join(', ')}
+                  </p>
+                </div>
               </div>
             </Popup>
           </Marker>
         ))}
-        
-        {/* Moving truck */}
-        <MovingTruck />
       </MapContainer>
     </div>
   );
