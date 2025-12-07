@@ -37,7 +37,6 @@ export default function RefrigerantPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 16 }}>
                 <div>
                   <h3 style={{ fontSize: 24, fontWeight: 800, color: statusColor, marginBottom: 4 }}>{refrigerant.type}</h3>
-                  <p style={{ fontSize: 13, color: '#94a3b8' }}>{refrigerant.name}</p>
                 </div>
                 <span style={{
                   padding: '4px 10px',
