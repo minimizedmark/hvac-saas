@@ -12,12 +12,28 @@ export const TECHS = [
     eta: 8,
     skills: ['Lennox', 'Carrier', 'Refrigeration'],
     color: '#3B82F6',
-    position: { lat: 53.5011, lng: -113.4950 },
+    position: { lat: 53.4800, lng: -113.4200 },
     route: [
-      { lat: 53.5011, lng: -113.4950 },
-      { lat: 53.5020, lng: -113.4960 },
-      { lat: 53.5035, lng: -113.4975 },
-      { lat: 53.5050, lng: -113.4990 },
+      { lat: 53.4800, lng: -113.4200 },
+      { lat: 53.4820, lng: -113.4220 },
+      { lat: 53.4840, lng: -113.4240 },
+      { lat: 53.4860, lng: -113.4260 },
+      { lat: 53.4880, lng: -113.4280 },
+      { lat: 53.4900, lng: -113.4300 },
+      { lat: 53.4920, lng: -113.4320 },
+      { lat: 53.4940, lng: -113.4340 },
+      { lat: 53.4960, lng: -113.4360 },
+      { lat: 53.4980, lng: -113.4380 },
+      { lat: 53.5000, lng: -113.4400 },
+      { lat: 53.5020, lng: -113.4420 },
+      { lat: 53.5040, lng: -113.4440 },
+      { lat: 53.5060, lng: -113.4460 },
+      { lat: 53.5080, lng: -113.4480 },
+      { lat: 53.5100, lng: -113.4500 },
+      { lat: 53.5120, lng: -113.4520 },
+      { lat: 53.5140, lng: -113.4540 },
+      { lat: 53.5160, lng: -113.4560 },
+      { lat: 53.5180, lng: -113.4580 },
     ]
   },
   {
@@ -32,7 +48,7 @@ export const TECHS = [
     eta: 0,
     skills: ['Commercial', 'Trane', 'York'],
     color: '#10B981',
-    position: { lat: 53.5444, lng: -113.4909 },
+    position: { lat: 53.5461, lng: -113.4938 },
     route: []
   },
   {
@@ -47,11 +63,23 @@ export const TECHS = [
     eta: 15,
     skills: ['Installations', 'Lennox', 'Goodman'],
     color: '#F59E0B',
-    position: { lat: 53.5261, lng: -113.6258 },
+    position: { lat: 53.5300, lng: -113.6400 },
     route: [
-      { lat: 53.5261, lng: -113.6258 },
-      { lat: 53.5270, lng: -113.6270 },
-      { lat: 53.5285, lng: -113.6290 },
+      { lat: 53.5300, lng: -113.6400 },
+      { lat: 53.5310, lng: -113.6380 },
+      { lat: 53.5320, lng: -113.6360 },
+      { lat: 53.5330, lng: -113.6340 },
+      { lat: 53.5340, lng: -113.6320 },
+      { lat: 53.5350, lng: -113.6300 },
+      { lat: 53.5360, lng: -113.6280 },
+      { lat: 53.5370, lng: -113.6260 },
+      { lat: 53.5380, lng: -113.6240 },
+      { lat: 53.5390, lng: -113.6220 },
+      { lat: 53.5400, lng: -113.6200 },
+      { lat: 53.5410, lng: -113.6180 },
+      { lat: 53.5420, lng: -113.6160 },
+      { lat: 53.5430, lng: -113.6140 },
+      { lat: 53.5440, lng: -113.6120 },
     ]
   },
   {
@@ -66,7 +94,7 @@ export const TECHS = [
     eta: null,
     skills: ['Furnaces', 'Bryant', 'Rheem'],
     color: '#6B7280',
-    position: { lat: 53.5461, lng: -113.4938 },
+    position: { lat: 53.6000, lng: -113.4900 },
     route: []
   },
   {
@@ -81,7 +109,7 @@ export const TECHS = [
     eta: 0,
     skills: ['Emergency', 'Residential', 'All brands'],
     color: '#EF4444',
-    position: { lat: 53.5586, lng: -113.4769 },
+    position: { lat: 53.5800, lng: -113.4100 },
     route: []
   },
 ];
