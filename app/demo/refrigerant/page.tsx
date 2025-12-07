@@ -69,11 +69,11 @@ export default function RefrigerantPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
                 <div>
                   <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 4 }}>Cost/lb</p>
-                  <p style={{ fontSize: 16, fontWeight: 700 }}>${refrigerant.cost}</p>
+                  <p style={{ fontSize: 16, fontWeight: 700 }}>${refrigerant.costPerUnit}</p>
                 </div>
                 <div>
                   <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 4 }}>Monthly Usage</p>
-                  <p style={{ fontSize: 16, fontWeight: 700 }}>{refrigerant.usage} lbs</p>
+                  <p style={{ fontSize: 16, fontWeight: 700 }}>{refrigerant.monthlyUsage} lbs</p>
                 </div>
               </div>
 
