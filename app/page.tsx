@@ -58,10 +58,38 @@ export default function Home() {
           </p>
         </header>
 
+        {/* LIVE DEMO CTA */}
+        <div style={{ textAlign: 'center', margin: '40px 0' }}>
+          <a 
+            href="/demo/dashboard"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #00d4ff 0%, #2563eb 100%)',
+              color: '#fff',
+              fontSize: 24,
+              fontWeight: 900,
+              padding: '20px 60px',
+              borderRadius: 12,
+              textDecoration: 'none',
+              boxShadow: '0 10px 30px rgba(0,212,255,0.4)',
+              border: '2px solid #00d4ff',
+              cursor: 'pointer',
+              transition: 'transform 0.2s'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            🚀 Try Live Demo Now
+          </a>
+          <p style={{ color: '#94a3b8', marginTop: 15, fontSize: 16 }}>
+            Interactive dashboard • GPS tracking • Invoicing • Refrigerant logs
+          </p>
+        </div>
+
         {/* LIVE DEMO MAP */}
-        <h2 style={{ color: '#00d4ff', textAlign: 'center', marginTop: 60 }}>🔴 LIVE DEMO (Updates Every 3 Seconds)</h2>
+        <h2 style={{ color: '#00d4ff', textAlign: 'center', marginTop: 60 }}>🔴 Live GPS Preview</h2>
         <p style={{ textAlign: 'center', color: '#94a3b8', marginBottom: 20 }}>
-          See real-time trucks on actual Edmonton streets below
+          Real-time truck tracking (updates every 3 seconds) • <a href="/demo/gps" style={{ color: '#00d4ff', textDecoration: 'underline' }}>See full GPS demo →</a>
         </p>
         <div style={{
           width: '100%', height: 500, border: '3px solid #00d4ff', borderRadius: 12,
