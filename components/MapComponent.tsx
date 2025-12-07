@@ -5,53 +5,65 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TECHS } from '../lib/demoData';
 
-// Create custom icons for each tech using their color
+// Create professional truck icon with SVG
 const createTruckIcon = (color: string) => {
   return L.divIcon({
-    html: `<div style="background-color: ${color}; width: 32px; height: 32px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-center; font-size: 16px;">🚛</div>`,
-    className: '',
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16],
+    html: `
+      <div style="
+        width: 48px;
+        height: 48px;
+        background: ${color}20;
+        border: 4px solid ${color};
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        transition: all 0.3s;
+      ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13" rx="2" ry="2"></rect>
+          <path d="M16 8h5l3 3v5h-2"></path>
+          <circle cx="5.5" cy="18.5" r="2.5" fill="${color}"></circle>
+          <circle cx="18.5" cy="18.5" r="2.5" fill="${color}"></circle>
+        </svg>
+      </div>
+    `,
+    className: 'custom-truck-icon',
+    iconSize: [48, 48],
+    iconAnchor: [24, 24],
+    popupAnchor: [0, -24],
   });
 };
 
 export default function MapComponent({ height = '100%', width = '100%' }) {
-  const [techPositions, setTechPositions] = useState(TECHS);
   const [routeIndexes, setRouteIndexes] = useState<{[key: number]: number}>({});
 
-  // Initialize route indexes for moving techs
+  // Initialize route indexes
   useEffect(() => {
     const indexes: {[key: number]: number} = {};
     TECHS.forEach(tech => {
-      if (tech.route && tech.route.length > 0) {
-        indexes[tech.id] = 0;
-      }
+      indexes[tech.id] = 0;
     });
     setRouteIndexes(indexes);
   }, []);
 
-  // Animate moving trucks every 3 seconds
+  // Animate trucks along routes every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setTechPositions(prev => prev.map(tech => {
-        if (tech.status === 'en-route' && tech.route && tech.route.length > 0) {
-          const currentIndex = routeIndexes[tech.id] || 0;
-          const nextIndex = (currentIndex + 1) % tech.route.length;
-          
-          setRouteIndexes(prev => ({ ...prev, [tech.id]: nextIndex }));
-          
-          return {
-            ...tech,
-            position: tech.route[nextIndex]
-          };
-        }
-        return tech;
-      }));
+      setRouteIndexes(prev => {
+        const updated = { ...prev };
+        TECHS.forEach(tech => {
+          if (tech.status === 'en-route' && tech.route && tech.route.length > 0) {
+            updated[tech.id] = ((prev[tech.id] || 0) + 1) % tech.route.length;
+          }
+        });
+        return updated;
+      });
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [routeIndexes]);
+  }, []);
 
   return (
     <div style={{ height, width }}>
@@ -60,78 +72,134 @@ export default function MapComponent({ height = '100%', width = '100%' }) {
         zoom={12}
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
+        zoomControl={true}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
+          maxZoom={19}
         />
         
-        {/* Draw routes for moving techs */}
-        {techPositions.map(tech => 
-          tech.route && tech.route.length > 0 && (
+        {/* Draw routes for en-route techs */}
+        {TECHS.map(tech => 
+          tech.status === 'en-route' && tech.route && tech.route.length > 0 && (
             <Polyline 
               key={`route-${tech.id}`}
               positions={tech.route.map(p => [p.lat, p.lng])} 
               color={tech.color} 
-              weight={4}
-              opacity={0.6}
-              dashArray="10, 10"
+              weight={5}
+              opacity={0.7}
+              dashArray="12, 8"
             />
           )
         )}
         
-        {/* Show all tech markers */}
-        {techPositions.map(tech => (
-          <Marker 
-            key={tech.id}
-            position={[tech.position.lat, tech.position.lng]} 
-            icon={createTruckIcon(tech.color)}
-          >
-            <Popup>
-              <div style={{ minWidth: 220, padding: 8 }}>
-                <h3 style={{ margin: '0 0 8px 0', color: tech.color, fontSize: 16, fontWeight: 700 }}>
-                  {tech.name}
-                </h3>
-                <p style={{ margin: '4px 0', fontSize: 13 }}>
-                  <strong>{tech.truck}</strong>
-                </p>
-                <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>
-                  {tech.phone}
-                </p>
-                <div style={{ 
-                  margin: '8px 0 4px 0', 
-                  padding: '4px 8px', 
-                  borderRadius: 4,
-                  background: tech.status === 'on-site' ? '#10B981' : 
-                             tech.status === 'en-route' ? '#3B82F6' : '#6B7280',
-                  color: 'white',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  textAlign: 'center',
-                  textTransform: 'uppercase'
-                }}>
-                  {tech.status}
+        {/* Show all tech markers at their current positions */}
+        {TECHS.map(tech => {
+          // Calculate current position for moving trucks
+          let currentPos = tech.position;
+          if (tech.status === 'en-route' && tech.route && tech.route.length > 0) {
+            const index = routeIndexes[tech.id] || 0;
+            currentPos = tech.route[index];
+          }
+          
+          return (
+            <Marker 
+              key={tech.id}
+              position={[currentPos.lat, currentPos.lng]} 
+              icon={createTruckIcon(tech.color)}
+            >
+              <Popup maxWidth={280}>
+                <div style={{ padding: '12px 8px', fontFamily: 'system-ui, sans-serif' }}>
+                  <h3 style={{ 
+                    margin: '0 0 12px 0', 
+                    color: tech.color, 
+                    fontSize: 18, 
+                    fontWeight: 800,
+                    borderBottom: `3px solid ${tech.color}`,
+                    paddingBottom: 8
+                  }}>
+                    {tech.name}
+                  </h3>
+                  
+                  <div style={{ display: 'grid', gap: 8 }}>
+                    <div>
+                      <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#1f2937' }}>
+                        {tech.truck}
+                      </p>
+                      <p style={{ margin: '2px 0 0 0', fontSize: 13, color: '#6b7280' }}>
+                        📞 {tech.phone}
+                      </p>
+                    </div>
+                    
+                    <div style={{ 
+                      padding: '8px 12px', 
+                      borderRadius: 8,
+                      background: tech.status === 'on-site' ? '#10B98120' : 
+                                 tech.status === 'en-route' ? '#3B82F620' : '#6B728020',
+                      border: `2px solid ${tech.status === 'on-site' ? '#10B981' : 
+                                          tech.status === 'en-route' ? '#3B82F6' : '#6B7280'}`,
+                    }}>
+                      <p style={{ 
+                        margin: 0,
+                        fontSize: 12,
+                        fontWeight: 700,
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        color: tech.status === 'on-site' ? '#10B981' : 
+                               tech.status === 'en-route' ? '#3B82F6' : '#6B7280'
+                      }}>
+                        {tech.status}
+                      </p>
+                    </div>
+                    
+                    <div style={{ 
+                      background: '#f3f4f6', 
+                      padding: 10, 
+                      borderRadius: 6,
+                      borderLeft: `4px solid ${tech.color}`
+                    }}>
+                      <p style={{ margin: '0 0 4px 0', fontSize: 14, fontWeight: 700, color: '#111827' }}>
+                        {tech.customer || 'Available'}
+                      </p>
+                      <p style={{ margin: '0 0 4px 0', fontSize: 13, color: '#4b5563' }}>
+                        📍 {tech.currentJob}
+                      </p>
+                      <p style={{ margin: 0, fontSize: 12, color: '#6b7280' }}>
+                        {tech.jobType}
+                      </p>
+                      {tech.eta && (
+                        <p style={{ 
+                          margin: '8px 0 0 0', 
+                          fontSize: 14, 
+                          color: tech.color, 
+                          fontWeight: 700,
+                          textAlign: 'right'
+                        }}>
+                          🕐 ETA: {tech.eta} min
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div style={{ 
+                      paddingTop: 8, 
+                      borderTop: '2px solid #e5e7eb',
+                      marginTop: 4
+                    }}>
+                      <p style={{ margin: 0, fontSize: 11, color: '#9ca3af', fontWeight: 600 }}>
+                        CERTIFICATIONS
+                      </p>
+                      <p style={{ margin: '4px 0 0 0', fontSize: 12, color: '#4b5563' }}>
+                        {tech.skills.join(' • ')}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p style={{ margin: '8px 0 4px 0', fontSize: 13, fontWeight: 600 }}>
-                  {tech.currentJob}
-                </p>
-                <p style={{ margin: '4px 0', fontSize: 12, color: '#666' }}>
-                  {tech.jobType}
-                </p>
-                {tech.eta && (
-                  <p style={{ margin: '8px 0 0 0', fontSize: 12, color: tech.color, fontWeight: 600 }}>
-                    ETA: {tech.eta} minutes
-                  </p>
-                )}
-                <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #e5e7eb' }}>
-                  <p style={{ margin: 0, fontSize: 11, color: '#888' }}>
-                    Skills: {tech.skills.join(', ')}
-                  </p>
-                </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );
