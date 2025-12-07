@@ -51,10 +51,10 @@ export default function Home() {
         <header style={{ textAlign: 'center', padding: '40px 20px 20px' }}>
           <h1 style={{ fontSize: 48, margin: 0, color: '#00d4ff', fontWeight: 900 }}>HVAC Flow</h1>
           <p style={{ fontSize: 22, color: '#94a3b8', margin: '20px 0' }}>
-            Only 50 Alberta contractors will EVER lock in $1,495/year for life
+            Only 50 contractors will EVER lock in $1,495/year for life
           </p>
           <p style={{ fontSize: 18, maxWidth: 700, margin: '20px auto' }}>
-            Built by Mark – Former Alberta HVAC tech who got sick of hearing his boss complain about $600/month software that didn't work for small shops.
+            Built by Mark – Former HVAC tech who got sick of hearing his boss complain about $600/month software that didn't work for small shops.
           </p>
         </header>
 
@@ -136,8 +136,8 @@ export default function Home() {
             <ul style={{ lineHeight: 2 }}>
               <li><strong>Locked pricing forever:</strong> $1,495/year (max 7% annual increase)</li>
               <li><strong>AI diagnostics included FREE</strong> (worth $500/year)</li>
-              <li><strong>Annual founder's dinner</strong> at BUILDEX Calgary (starting Oct 2027)</li>
-              <li><strong>Alberta contractor network</strong> (50 members helping each other)</li>
+              <li><strong>Annual founder's summit</strong> at major HVAC trade shows (rotating cities)</li>
+              <li><strong>National contractor network</strong> (50 members helping each other)</li>
               <li><strong>Private Slack channel</strong> + monthly video calls</li>
               <li><strong>Direct SMS line to founder:</strong> (587) 402-8264</li>
               <li><strong>Priority feature requests</strong> (you shape what gets built)</li>
@@ -196,7 +196,7 @@ export default function Home() {
             </button>
           )}
           <p style={{ marginTop: 30, fontSize: 18, color: '#94a3b8' }}>
-            Built for 1-5 truck Alberta HVAC operations
+            Built for 1-5 truck HVAC operations across North America
           </p>
           <p style={{ marginTop: 30, fontSize: 16, color: '#64748b' }}>
             <strong>Guarantee:</strong> Full refund if not live in 6 months
@@ -233,7 +233,7 @@ export default function Home() {
               </tr>
               <tr>
                 <td style={{ padding: 15 }}>Designed for US market</td>
-                <td style={{ padding: 15 }}><strong style={{ color: '#00d4ff' }}>Built for Alberta contractors</strong></td>
+                <td style={{ padding: 15 }}><strong style={{ color: '#00d4ff' }}>Built for small shops (1-5 trucks)</strong></td>
               </tr>
             </tbody>
           </table>
@@ -246,11 +246,11 @@ export default function Home() {
         }}>
           <h2 style={{ marginTop: 0, color: '#00d4ff' }}>Why I Built This</h2>
           <p style={{ fontSize: 18, lineHeight: 1.8, maxWidth: 700, margin: '20px auto' }}>
-            I worked HVAC in Alberta for years. Heard my boss complain constantly:
+            I worked HVAC for years. Heard my boss complain constantly:
           </p>
           <ul style={{ maxWidth: 600, margin: '20px auto', textAlign: 'left', fontSize: 18, lineHeight: 2 }}>
             <li>"Why am I paying $600/month for a glorified calendar?"</li>
-            <li>"This software was built for Dallas, not Edmonton winters"</li>
+            <li>"This software was built for massive operations, not shops like yours"</li>
             <li>"I need 10% of these features but pay for 100%"</li>
           </ul>
           <p style={{ fontSize: 18, lineHeight: 1.8, maxWidth: 700, margin: '20px auto' }}>
@@ -298,7 +298,7 @@ export default function Home() {
             <strong>Text:</strong> <a href="sms:+15874028264" style={{ color: '#00d4ff' }}>(587) 402-8264</a>
           </p>
           <p style={{ fontSize: 20 }}>
-            <strong>Email:</strong> <a href="mailto:mark@smartbizai.store" style={{ color: '#00d4ff' }}>mark@smartbizai.store</a>
+            <strong>Email:</strong> <a href="mailto:mark@hvacflow.app" style={{ color: '#00d4ff' }}>mark@hvacflow.app</a>
           </p>
           <p style={{ marginTop: 30, fontSize: 14 }}>
             HVAC Flow &copy; 2025 | Alberta, Canada
