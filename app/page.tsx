@@ -6,8 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 const HVACMap = dynamic(() => import('../components/HVACMap'), { 
-  ssr: false,
-  loading: () => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', color: '#00d4ff', fontSize: 18 }}>Loading map...</div>
+  ssr: false
 });
 
 const supabase = createClient(

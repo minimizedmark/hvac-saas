@@ -221,13 +221,16 @@ export async function GET() {
             const index = Math.floor(route.length * progress);
             position = route[index];
           } else {
-            // Fallback: generate simple route
-            route = Array.from({ length: 15 }, (_, i) => ({
-              lat: start.lat + (end.lat - start.lat) * (i / 14),
-              lng: start.lng + (end.lng - start.lng) * (i / 14)
+            // Fallback: generate simple route with at least 20 points for smooth animation
+            route = Array.from({ length: 25 }, (_, i) => ({
+              lat: start.lat + (end.lat - start.lat) * (i / 24),
+              lng: start.lng + (end.lng - start.lng) * (i / 24)
             }));
             position = route[0];
           }
+        } else {
+          // For non-route techs, create empty route array
+          route = [];
         }
         
         return {

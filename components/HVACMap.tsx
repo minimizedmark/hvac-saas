@@ -101,15 +101,14 @@ export default function MapComponent({ height = '100%', width = '100%', techs = 
         const updated = { ...prev };
         let hasChanges = false;
         
-        // Use a closure to get the current techs state
         techs.forEach(tech => {
-          if (tech.status === 'en-route' && tech.route && tech.route.length > 1) {
+          // Only animate if truck has en-route status and has a valid route
+          if (tech.status === 'en-route' && tech.route && tech.route.length > 2) {
             const currentIndex = prev[tech.id] || 0;
+            // Cycle through route points
             const nextIndex = (currentIndex + 1) % tech.route.length;
-            if (nextIndex !== currentIndex) {
-              updated[tech.id] = nextIndex;
-              hasChanges = true;
-            }
+            updated[tech.id] = nextIndex;
+            hasChanges = true;
           }
         });
         
