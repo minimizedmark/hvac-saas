@@ -20,6 +20,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 
 export default function Home() {
   const [spotsLeft, setSpotsLeft] = useState<number>(50);
   const [loading, setLoading] = useState(true);
+  const [demoTechs, setDemoTechs] = useState<any[]>([]);
 
   const fetchCount = async () => {
     const { count } = await supabase
@@ -31,8 +32,24 @@ export default function Home() {
     setLoading(false);
   };
 
+  // Fetch demo techs for map preview
+  const fetchDemoTechs = async () => {
+    try {
+      const response = await fetch('/api/generate-demo-state');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.techs && Array.isArray(data.techs)) {
+          setDemoTechs(data.techs);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch demo techs:', error);
+    }
+  };
+
   useEffect(() => {
     fetchCount();
+    fetchDemoTechs();
     const channel = supabase
       .channel('founding-count')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'founding_members' }, fetchCount)
@@ -100,7 +117,7 @@ export default function Home() {
           width: '100%', height: 500, border: '3px solid #00d4ff', borderRadius: 12,
           overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,212,255,0.3)', margin: '40px 0'
         }}>
-          <HVACMap height="100%" width="100%" />
+          <HVACMap height="100%" width="100%" techs={demoTechs} />
         </div>
 
         {/* FEATURES */}

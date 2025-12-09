@@ -101,12 +101,15 @@ export default function MapComponent({ height = '100%', width = '100%', techs = 
         const updated = { ...prev };
         let hasChanges = false;
         
+        // Use a closure to get the current techs state
         techs.forEach(tech => {
-          if (tech.status === 'en-route' && tech.route && tech.route.length > 0) {
+          if (tech.status === 'en-route' && tech.route && tech.route.length > 1) {
             const currentIndex = prev[tech.id] || 0;
             const nextIndex = (currentIndex + 1) % tech.route.length;
-            updated[tech.id] = nextIndex;
-            hasChanges = true;
+            if (nextIndex !== currentIndex) {
+              updated[tech.id] = nextIndex;
+              hasChanges = true;
+            }
           }
         });
         
@@ -115,7 +118,7 @@ export default function MapComponent({ height = '100%', width = '100%', techs = 
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [isInitialized, techs]);
+  }, [techs, isInitialized]);
 
   // Memoize truck icons to prevent recreation on every render
   const truckIcons = useMemo(() => {
