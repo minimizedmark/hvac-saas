@@ -129,7 +129,7 @@ export default function Home() {
         {/* LIVE DEMO MAP */}
         <h2 style={{ color: '#00d4ff', textAlign: 'center', marginTop: 60 }}>🔴 Live GPS Preview</h2>
         <p style={{ textAlign: 'center', color: '#94a3b8', marginBottom: 20 }}>
-          Real-time truck tracking (updates every 3 seconds) • <a href="/demo/gps" style={{ color: '#00d4ff', textDecoration: 'underline' }}>See full GPS demo →</a>
+          Real-time truck tracking (updates every 3 seconds)
         </p>
         <div style={{
           width: '100%', height: 500, border: '3px solid #00d4ff', borderRadius: 12,
