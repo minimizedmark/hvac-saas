@@ -3,7 +3,10 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { TECHS, JOBS } from '../../../lib/demoData';
 
-const HVACMap = dynamic(() => import('../../../components/HVACMap'), { ssr: false });
+const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
+  ssr: false,
+  loading: () => <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f', color: '#00d4ff' }}>Loading map...</div>
+});
 
 export default function Dashboard() {
   const [revenue, setRevenue] = useState(18400);

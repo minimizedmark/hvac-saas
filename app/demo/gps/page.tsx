@@ -2,7 +2,10 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-const HVACMap = dynamic(() => import('../../../components/HVACMap'), { ssr: false });
+const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
+  ssr: false,
+  loading: () => <div style={{ height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f', color: '#00d4ff' }}>Loading map...</div>
+});
 
 interface Tech {
   id: number;

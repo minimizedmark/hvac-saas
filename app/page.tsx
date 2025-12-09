@@ -5,7 +5,10 @@ import dynamic from 'next/dynamic';
 import { createClient } from '@supabase/supabase-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const HVACMap = dynamic(() => import('../components/HVACMap'), { ssr: false });
+const HVACMap = dynamic(() => import('../components/HVACMap'), { 
+  ssr: false,
+  loading: () => <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f', color: '#00d4ff' }}>Loading map...</div>
+});
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
