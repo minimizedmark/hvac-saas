@@ -111,9 +111,6 @@ export default function GPSPage() {
         >
           Retry
         </button>
-        >
-          Retry
-        </button>
       </div>
     );
   }
@@ -149,7 +146,7 @@ export default function GPSPage() {
           {techs.map(tech => (
             <div key={tech.id} style={{
               background: '#0a192f',
-              border: \2px solid \\,
+              border: '2px solid ' + tech.color,
               borderRadius: 8,
               padding: 16,
               display: 'flex',
