@@ -92,7 +92,7 @@ export default function MapComponent({ height = '100%', width = '100%', techs = 
     setIsInitialized(true);
   }, [techs]);
 
-  // Animate trucks along routes every 3 seconds with smooth progression
+  // Animate trucks along routes with slow, realistic speed (update every 8 seconds per segment)
   useEffect(() => {
     if (!isInitialized || techs.length === 0) return;
 
@@ -105,16 +105,22 @@ export default function MapComponent({ height = '100%', width = '100%', techs = 
           // Only animate if truck has en-route status and has a valid route
           if (tech.status === 'en-route' && tech.route && tech.route.length > 2) {
             const currentIndex = prev[tech.id] || 0;
-            // Cycle through route points
-            const nextIndex = (currentIndex + 1) % tech.route.length;
-            updated[tech.id] = nextIndex;
-            hasChanges = true;
+            const maxIndex = tech.route.length - 1;
+            
+            // Stop at the end instead of looping
+            if (currentIndex < maxIndex) {
+              updated[tech.id] = currentIndex + 1;
+              hasChanges = true;
+            } else {
+              // Truck has reached the end, keep it there
+              updated[tech.id] = maxIndex;
+            }
           }
         });
         
         return hasChanges ? updated : prev;
       });
-    }, 3000);
+    }, 8000); // 8 seconds per segment for slower, more realistic movement
 
     return () => clearInterval(interval);
   }, [techs, isInitialized]);
