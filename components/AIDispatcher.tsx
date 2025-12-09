@@ -99,7 +99,7 @@ export default function AIDispatcher({ onTechUpdate, onNewJob, onJobComplete }: 
       id: tech.id,
       name: tech.name,
       status: tech.status,
-      location: tech.currentPosition,
+      location: tech.position,
       currentJob: tech.currentJob,
       eta: tech.eta
     }));
@@ -114,7 +114,7 @@ TECHNICIANS:
 ${techStatus.map(t => `- ${t.name}: ${t.status} ${t.currentJob ? `(${t.currentJob})` : '(Available)'} ${t.eta ? `ETA ${t.eta}min` : ''}`).join('\n')}
 
 ACTIVE JOBS:
-${activeJobs.map(j => `- ${j.priority.toUpperCase()}: ${j.type} at ${j.address} (Assigned: ${j.assignedTo || 'Unassigned'})`).join('\n')}
+${activeJobs.map(j => `- ${j.priority.toUpperCase()}: ${j.type} at ${j.address} (Assigned: ${j.tech || 'Unassigned'})`).join('\n')}
 
 DISPATCH RULES:
 - Minimize drive time and fuel costs
