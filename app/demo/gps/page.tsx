@@ -3,7 +3,21 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
-  ssr: false
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '600px', 
+      background: '#0a192f',
+      color: '#00d4ff',
+      fontSize: 18,
+      fontWeight: 700
+    }}>
+      📍 Loading live map...
+    </div>
+  )
 });
 
 interface Tech {
@@ -27,6 +41,11 @@ export default function GPSPage() {
   const [updates, setUpdates] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Fetch fresh demo state from API
   const fetchDemoState = async () => {
@@ -138,7 +157,7 @@ export default function GPSPage() {
         boxShadow: '0 10px 30px rgba(0,212,255,0.3)',
         marginBottom: 40
       }}>
-        <HVACMap height="100%" width="100%" techs={techs} />
+        {mounted && <HVACMap height="100%" width="100%" techs={techs} />}
       </div>
       
       {/* Tech Status List */}

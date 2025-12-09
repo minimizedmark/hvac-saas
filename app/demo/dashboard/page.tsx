@@ -4,12 +4,31 @@ import dynamic from 'next/dynamic';
 import { TECHS, JOBS } from '../../../lib/demoData';
 
 const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
-  ssr: false
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '400px', 
+      background: '#0a192f',
+      color: '#00d4ff',
+      fontSize: 18,
+      fontWeight: 700
+    }}>
+      📍 Loading map...
+    </div>
+  )
 });
 
 export default function Dashboard() {
   const [revenue, setRevenue] = useState(18400);
   const [updates, setUpdates] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,7 +69,7 @@ export default function Dashboard() {
       <div style={{ marginBottom: 32 }}>
         <h2 style={{ fontSize: 24, fontWeight: 700, color: '#e2e8f0', marginBottom: 16 }}>Live GPS Tracking</h2>
         <div style={{ height: 400, borderRadius: 12, overflow: 'hidden', border: '2px solid #334155' }}>
-          <HVACMap />
+          {mounted && <HVACMap techs={TECHS} />}
         </div>
       </div>
 

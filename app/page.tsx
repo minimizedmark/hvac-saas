@@ -6,7 +6,21 @@ import { createClient } from '@supabase/supabase-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 const HVACMap = dynamic(() => import('../components/HVACMap'), { 
-  ssr: false
+  ssr: false,
+  loading: () => (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '500px', 
+      background: '#0a192f',
+      color: '#00d4ff',
+      fontSize: 18,
+      fontWeight: 700
+    }}>
+      📍 Loading map...
+    </div>
+  )
 });
 
 const supabase = createClient(
@@ -20,6 +34,11 @@ export default function Home() {
   const [spotsLeft, setSpotsLeft] = useState<number>(50);
   const [loading, setLoading] = useState(true);
   const [demoTechs, setDemoTechs] = useState<any[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const fetchCount = async () => {
     const { count } = await supabase
@@ -116,7 +135,7 @@ export default function Home() {
           width: '100%', height: 500, border: '3px solid #00d4ff', borderRadius: 12,
           overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,212,255,0.3)', margin: '40px 0'
         }}>
-          <HVACMap height="100%" width="100%" techs={demoTechs} />
+          {mounted && <HVACMap height="100%" width="100%" techs={demoTechs} />}
         </div>
 
         {/* FEATURES */}
