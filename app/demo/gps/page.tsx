@@ -111,6 +111,9 @@ export default function GPSPage() {
         >
           Retry
         </button>
+        >
+          Retry
+        </button>
       </div>
     );
   }
