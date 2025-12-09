@@ -9,17 +9,20 @@ const EDMONTON_BOUNDS = {
   west: -113.65
 };
 
-interface TechState {
-  id: number;
+interface TechData {
   name: string;
-  truck: string;
-  phone: string;
   status: 'en-route' | 'on-site' | 'available';
-  currentJob: string;
   customer: string | null;
   jobType: string;
+  currentJob: string;
   eta: number | null;
   skills: string[];
+}
+
+interface TechState extends TechData {
+  id: number;
+  truck: string;
+  phone: string;
   color: string;
   position: { lat: number; lng: number };
   route: { lat: number; lng: number }[];
@@ -195,7 +198,7 @@ export async function GET() {
     
     // Build full tech state with routes
     const techStates: TechState[] = await Promise.all(
-      techsData.slice(0, 5).map(async (tech, idx) => {
+      techsData.slice(0, 5).map(async (tech: TechData, idx: number) => {
         const color = colors[idx];
         const phone = `(780) 555-0${100 + idx * 20}`;
         
