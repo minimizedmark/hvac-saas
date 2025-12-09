@@ -294,7 +294,7 @@ export default function Home() {
             <li>"I need 10% of these features but pay for 100%"</li>
           </ul>
           <p style={{ fontSize: 18, lineHeight: 1.8, maxWidth: 700, margin: '20px auto' }}>
-            After hearing it enough times, I figured: <strong>fuck it, I'll build something better.</strong>
+            After hearing it enough times, I figured: <strong>screw it, I'll build something better.</strong>
           </p>
           <p style={{ fontSize: 18, lineHeight: 1.8, maxWidth: 700, margin: '20px auto' }}>
             This isn't some Silicon Valley startup looking to gouge you later. This is software built by someone who understands what it's like to stand in a customer's basement with greasy gloves trying to log into complicated software.
