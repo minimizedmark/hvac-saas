@@ -5,7 +5,7 @@ import { TECHS, JOBS } from '../../../lib/demoData';
 
 const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
   ssr: false,
-  loading: () => <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f', color: '#00d4ff' }}>Loading map...</div>
+  loading: () => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px', color: '#00d4ff', fontSize: 18 }}>Loading map...</div>
 });
 
 export default function Dashboard() {

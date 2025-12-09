@@ -4,7 +4,20 @@ import dynamic from 'next/dynamic';
 
 const HVACMap = dynamic(() => import('../../../components/HVACMap'), { 
   ssr: false,
-  loading: () => <div style={{ height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0a192f', color: '#00d4ff' }}>Loading map...</div>
+  loading: () => (
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      height: '600px', 
+      color: '#00d4ff', 
+      fontSize: 18,
+      background: '#0a192f',
+      borderRadius: 12
+    }}>
+      Loading map...
+    </div>
+  )
 });
 
 interface Tech {
