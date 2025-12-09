@@ -1,7 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { TECHS, JOBS } from '../../../lib/demoData';
-import HVACMap from '../../../components/HVACMap';
+
+const HVACMap = dynamic(() => import('../../../components/HVACMap'), { ssr: false });
 
 export default function Dashboard() {
   const [revenue, setRevenue] = useState(18400);

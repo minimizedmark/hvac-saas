@@ -1,6 +1,8 @@
 ﻿'use client';
 import { useState, useEffect } from 'react';
-import HVACMap from '../../../components/HVACMap';
+import dynamic from 'next/dynamic';
+
+const HVACMap = dynamic(() => import('../../../components/HVACMap'), { ssr: false });
 
 interface Tech {
   id: number;
