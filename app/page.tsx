@@ -220,7 +220,7 @@ export default function Home() {
                 margin: '20px 0', transition: 'all 0.3s'
               }}
             >
-              Reserve My Spot – $1,495/year
+              Claim Your Spot – $1,495/year
             </button>
           )}
           {soldOut && (
