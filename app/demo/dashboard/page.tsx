@@ -19,25 +19,6 @@ export default function Dashboard() {
 
   return (
     <div>
-      {/* Demo Navigation */}
-      <div style={{ 
-        background: '#001528', 
-        border: '2px solid #334155', 
-        borderRadius: 12, 
-        padding: 16, 
-        marginBottom: 32,
-        display: 'flex',
-        gap: 12,
-        flexWrap: 'wrap'
-      }}>
-        <a href="/demo/dashboard" style={{ padding: '8px 16px', background: '#00d4ff', color: '#0a192f', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>📊 Dashboard</a>
-        <a href="/demo/gps" style={{ padding: '8px 16px', background: '#334155', color: '#e2e8f0', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>📍 GPS Tracking</a>
-        <a href="/demo/invoicing" style={{ padding: '8px 16px', background: '#334155', color: '#e2e8f0', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>📄 Invoicing</a>
-        <a href="/demo/customers" style={{ padding: '8px 16px', background: '#334155', color: '#e2e8f0', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>👥 Customers</a>
-        <a href="/demo/refrigerant" style={{ padding: '8px 16px', background: '#334155', color: '#e2e8f0', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>🧊 Refrigerant</a>
-        <a href="/demo/schedule" style={{ padding: '8px 16px', background: '#334155', color: '#e2e8f0', borderRadius: 8, textDecoration: 'none', fontWeight: 700, cursor: 'pointer' }}>📅 Schedule</a>
-      </div>
-
       <h1 style={{ fontSize: 44, fontWeight: 900, color: '#00d4ff', marginBottom: 24 }}>Dashboard</h1>
 
       {/* Live Stats */}
