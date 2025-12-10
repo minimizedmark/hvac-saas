@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { createClient } from '@supabase/supabase-js';
 import { loadStripe } from '@stripe/stripe-js';
+import FounderContact from '../components/FounderContact';
 
 const HVACMap = dynamic(() => import('../components/HVACMap'), { 
   ssr: false,
@@ -282,6 +283,9 @@ export default function Home() {
             <p className="savings-text" style={{ color: '#94a3b8', fontSize: 18, margin: '30px 10px' }}>
               Your savings: <strong style={{ color: '#00d4ff' }}>$1,495/year on membership + $500/year on AI diagnostics = $1,995/year total savings, every year, forever</strong>
             </p>
+
+            <FounderContact />
+
             {!soldOut && (
               <button
                 onClick={handleCheckout}
