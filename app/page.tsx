@@ -76,13 +76,6 @@ export default function Home() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  const handleCheckout = async () => {
-    const stripe = await stripePromise;
-    const res = await fetch('/api/checkout', { method: 'POST' });
-    const { sessionId } = await res.json();
-    stripe?.redirectToCheckout({ sessionId });
-  };
-
   const soldOut = spotsLeft <= 0;
 
   return (
@@ -288,7 +281,7 @@ export default function Home() {
 
             {!soldOut && (
               <button
-                onClick={handleCheckout}
+                onClick={() => window.location.href = '/founding-member-terms'}
                 className="cta-button"
                 style={{
                   display: 'inline-block', background: '#00d4ff', color: '#0a192f', fontWeight: 'bold',
