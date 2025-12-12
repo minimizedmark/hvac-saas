@@ -147,7 +147,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
           <strong>Text:</strong> <a href="sms:+15874028264" style={{ color: '#00d4ff' }}>(587) 402-8264</a>
         </p>
         <p style={{ fontSize: 20 }}>
-          <strong>Email:</strong> <a href="mailto:mark@smartbizai.store" style={{ color: '#00d4ff' }}>mark@smartbizai.store</a>
+          <strong>Email:</strong> <a href="mailto:mark@hvacflow.app" style={{ color: '#00d4ff' }}>mark@hvacflow.app</a>
         </p>
         <p style={{ marginTop: 30, fontSize: 14 }}>
           Flow Platform &copy; 2025 | Alberta, Canada
