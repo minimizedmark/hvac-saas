@@ -411,15 +411,7 @@ export default function Home() {
               HVAC Flow &copy; 2025 | Alberta, Canada
             </p>
           </footer>
-       {/* TEMP TEST BUTTON - DELETE AFTER TESTING */}
-<div className="py-8 text-center bg-gray-100">
-  <a 
-    href="https://buy.stripe.com/dRm8wPccm6DRe99ceNeME03"
-    className="bg-red-600 text-white font-bold py-4 px-8 rounded-lg inline-block"
-  >
-    🧪 TEST CHECKOUT - $0.00
-  </a>
-</div> </div>
+  </div>
       </main>
     </>
   );
