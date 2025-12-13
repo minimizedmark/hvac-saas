@@ -406,12 +406,20 @@ export default function Home() {
             </p>
             <p style={{ fontSize: 20 }}>
               <strong>Email:</strong> <a href="mailto:mark@hvacflow.app" style={{ color: '#00d4ff' }}>mark@hvacflow.app</a>
-            </p>
+         </p>
             <p style={{ marginTop: 30, fontSize: 14 }}>
               HVAC Flow &copy; 2025 | Alberta, Canada
             </p>
           </footer>
-        </div>
+       {/* TEMP TEST BUTTON - DELETE AFTER TESTING */}
+<div className="py-8 text-center bg-gray-100">
+  <a 
+    href="https://buy.stripe.com/dRm8wPccm6DRe99ceNeME03"
+    className="bg-red-600 text-white font-bold py-4 px-8 rounded-lg inline-block"
+  >
+    🧪 TEST CHECKOUT - $0.00
+  </a>
+</div> </div>
       </main>
     </>
   );
