@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'HVAC Flow - HVAC Management Platform',
@@ -14,6 +15,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script 
+          src="https://www.googletagmanager.com/gtag/js?id=G-QWK0X22K1S"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-QWK0X22K1S');
+          `}
+        </Script>
         <link
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
