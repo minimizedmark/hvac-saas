@@ -84,10 +84,10 @@ export default function AdminDashboard() {
       const data = await res.json();
       
       if (data.success) {
-        alert(\`Tenant approved successfully! \${data.subscriptionId ? 'Subscription created.' : 'No billing configured.'}\`);
+        alert(`Tenant approved successfully! ${data.subscriptionId ? 'Subscription created.' : 'No billing configured.'}`);
         loadPendingTenants();
       } else {
-        alert(\`Error: \${data.error}\`);
+        alert(`Error: ${data.error}`);
       }
     } catch (error) {
       alert('Failed to approve tenant');
@@ -168,8 +168,14 @@ export default function AdminDashboard() {
             {trucksWithLocation.length} trucks with GPS location
           </p>
           
-          <div className="h-96 rounded-lg overflow-hidden">
-            <MapComponent trucks={trucksWithLocation} />
+          <div className="h-96 rounded-lg overflow-hidden border border-gray-200">
+            {trucksWithLocation.length > 0 ? (
+              <MapComponent height="384px" width="100%" />
+            ) : (
+              <div className="h-full flex items-center justify-center bg-gray-50">
+                <p className="text-gray-500">No trucks with GPS data available</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

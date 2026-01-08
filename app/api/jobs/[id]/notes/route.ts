@@ -58,7 +58,7 @@ export async function POST(
         const parsed = await parseInvoiceFromNotes(content, jobId, job.tenant_id);
         
         if (parsed.confidence >= 0.5) {
-          const invoiceNumber = \`INV-\${Date.now()}-\${Math.random().toString(36).substr(2, 4).toUpperCase()}\`;
+          const invoiceNumber = `INV-${Date.now()}-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
           
           const { data: invoice, error: invoiceError } = await supabase
             .from('invoices')

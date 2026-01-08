@@ -79,13 +79,7 @@ export async function POST(request: NextRequest) {
       .from('telemetry_recent')
       .delete()
       .eq('truck_id', truck.id)
-      .lt('recorded_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
-      .then(() => {
-        // Cleanup complete
-      })
-      .catch((err) => {
-        console.error('[GPS] Cleanup failed:', err);
-      });
+      .lt('recorded_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
     return NextResponse.json({
       success: true,
